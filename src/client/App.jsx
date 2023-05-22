@@ -1,32 +1,38 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import "./App.css";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import Layout from "./components/Layout";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    },
+  },
+});
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR!
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div className="bg-gray-700 m-0 p-0">
+      <BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+          <header className="p-2 bg-gray-900 h-16 flex justify-around">
+            <Link
+              to="/"
+              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+            >
+              Home
+            </Link>
+            <Link className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+              Signup
+            </Link>
+          </header>
+          <Routes>
+            <Route path="/" element={<Layout />} />
+          </Routes>
+        </QueryClientProvider>
+      </BrowserRouter>
     </div>
   );
 }

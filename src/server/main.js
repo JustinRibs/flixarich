@@ -5,7 +5,6 @@ const app = express();
 
 app.get("/hello", (req, res) => {
   res.send("Hello Vite + React!");
-  // res.send("bruh");
 });
 
 ViteExpress.listen(app, 3000, () =>
